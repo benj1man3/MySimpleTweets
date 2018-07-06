@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -18,11 +16,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-
 public class TimelineActivity extends AppCompatActivity {
 
     TwitterClient client;
@@ -67,7 +65,6 @@ public class TimelineActivity extends AppCompatActivity {
                     //notify the adapter that we've added an item
                     try {
 
-
                         Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
                         tweets.add(tweet);
                         tweetAdapter.notifyItemInserted(tweets.size() - 1);
@@ -110,9 +107,8 @@ public class TimelineActivity extends AppCompatActivity {
         // handle click here
         // first parameter is the context, second is the class of the activity to launch
         Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-        startActivity(i); // brings up the second activity
-        //TODO start activity for result
-
+        //startActivity(i); // brings up the second activity
+        startActivityForResult(i,REQUEST_CODE );
 
     }
 
@@ -123,23 +119,17 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
-    private final int REQUEST_CODE = 20;
-    // FirstActivity, launching an activity for a result
-    public void onClick(View view) {
-        Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
-        i.putExtra("mode", 2); // pass arbitrary data to launched activity
-        startActivityForResult(i, REQUEST_CODE);
-    }
+    public final int REQUEST_CODE = 20;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // REQUEST_CODE is defined above
+
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            // Extract name value from result extras
-            String name = data.getExtras().getString("name");
-            int code = data.getExtras().getInt("code", 0);
-            // Toast the name to display temporarily on screen
-            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+            Tweet tweet=(Tweet) Parcels.unwrap(data.getParcelableExtra("tweet"));
+            tweets.add(0, tweet);
+            tweetAdapter.notifyItemInserted(0);
+            rvTweets.scrollToPosition(0);
         }
     }
 
