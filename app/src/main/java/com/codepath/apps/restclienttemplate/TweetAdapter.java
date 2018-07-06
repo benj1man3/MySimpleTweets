@@ -55,6 +55,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvTime.setText(getRelativeTimeAgo(tweet.createdAt));
         //holder.tvScreenName.setText(tweet.user.screenName);
 
+
         System.out.print("This is the user ");
         System.out.println(tweet.user.name);
         System.out.print("This the screen name ");
