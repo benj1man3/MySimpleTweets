@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -105,6 +108,11 @@ public class TimelineActivity extends AppCompatActivity {
     }
     public void onComposeAction(MenuItem mi) {
         // handle click here
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+        startActivity(i); // brings up the second activity
+        //TODO start activity for result
+
 
     }
 
@@ -113,6 +121,26 @@ public class TimelineActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private final int REQUEST_CODE = 20;
+    // FirstActivity, launching an activity for a result
+    public void onClick(View view) {
+        Intent i = new Intent(TimelineActivity.this, ComposeActivity.class);
+        i.putExtra("mode", 2); // pass arbitrary data to launched activity
+        startActivityForResult(i, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Extract name value from result extras
+            String name = data.getExtras().getString("name");
+            int code = data.getExtras().getInt("code", 0);
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

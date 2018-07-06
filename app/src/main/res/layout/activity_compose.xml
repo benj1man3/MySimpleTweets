@@ -8,13 +8,20 @@
     android:orientation="vertical"
     tools:context=".ComposeActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
+
+    <EditText
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/holo_red_light"
-        android:background="?attr/colorPrimary">
-    </android.support.v7.widget.Toolbar>
+        android:ems="10"
+        android:hint="Tweet"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Tweet" />
+
 
 </LinearLayout>
