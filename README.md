@@ -52,7 +52,6 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='file:///Users/benj1man3/MySimpleTweets/twitter_1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ![Walkthrough](twitter_1.gif)
 
